@@ -1,3 +1,7 @@
+// This program is an implementation for a basic heap data structure
+// Author: Nikaansh S.
+// Last Edited: 2/14/24
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,6 +16,7 @@ private:
     const int MAXSIZE = 101;
 
 public:
+    // Function to move an element up in the heap
     void heapup(int index) {
         if (index == 1) {
             return;
@@ -23,6 +28,7 @@ public:
         }
     }
 
+    // Function to move an element down in the heap
     void heapdown(int index) {
         int leftchild = 2 * index;
         int rightchild = 2 * index + 1;
@@ -45,8 +51,10 @@ public:
         }
     }
 
+    // Constructor to initialize the heap
     maxheap() : size(0) {}
 
+    // Function to add an item to the heap
     void additem(int value) {
         if (size >= MAXSIZE) {
             cout << "Heap is full" << endl;
@@ -57,6 +65,7 @@ public:
         heapup(size);
     }
 
+    // Function to remove the root element of the heap
     void removeroot() {
         if (size == 0) {
             cout << "Heap is empty" << endl;
@@ -67,48 +76,53 @@ public:
         heapdown(1);
     }
 
+    // Function to remove all elements from the heap
     void removeall() {
         while (size != 0) {
             removeroot();
         }
     }
 
+    // Function to print all elements of the heap in a visual format
     void printall(int current = 1, int depth = 0) {
         if (current > size) {
             return;
         }
-        printall(2 * current + 1, depth + 1); 
+        printall(2 * current + 1, depth + 1); // Right child
         for (int i = 0; i < depth; i++) {
             cout << "\t";
         }
-        cout << heap[current] << endl;
-        printall(2 * current, depth + 1); 
+        cout << heap[current] << endl; // Current node
+        printall(2 * current, depth + 1); // Left child
     }
 
+    // Function to get the size of the heap
     int getsize() {
         return size;
     }
 
+    // Function to get the value of a specific element in the heap
     int getheap(int index) {
         return heap[index];
     }
 
+    // Function to read inputs from a file and add them to the heap
     void addFromFile(string filename) {
-        ifstream file(filename);
+        ifstream file(filename); // Open the file
         if (!file) {
-            cout << "Could not open file" << endl;
+            cout << "Could not open file" << endl; // Print error message if file cannot be opened
             return;
         }
         int value;
-        while (file >> value && size < MAXSIZE) { 
+        while (file >> value && size < MAXSIZE) { // Read numbers from the file until the heap is full
             additem(value);
         }
-        file.close(); 
+        file.close(); // Close the file
     }
 };
 
 int main() {
-    maxheap heap = maxheap(); 
+    maxheap heap = maxheap(); // Create an instance of the maxheap class
     string input;
 
     while (true) {
@@ -127,7 +141,7 @@ int main() {
             string filename;
             cout << "Enter filename: ";
             cin >> filename;
-            heap.addFromFile(filename); 
+            heap.addFromFile(filename); // Add elements from the file to the heap
         }
         else if (input == "delete") {
             heap.removeroot();
