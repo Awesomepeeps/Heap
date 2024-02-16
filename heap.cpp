@@ -1,6 +1,7 @@
 // This program is an implementation for a basic heap data structure
 // Author: Nikaansh S.
 // Last Edited: 2/14/24
+// Idea for heap up and heap down taken from geeks for geeks
 
 #include <iostream>
 #include <fstream>
